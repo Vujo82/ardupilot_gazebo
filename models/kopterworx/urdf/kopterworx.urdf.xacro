@@ -156,5 +156,7 @@
 <!--   <xacro:gimbal_macro parent="base_link">
     <origin xyz="0.25 0 -0.1" rpy="0 0 0"/>
   </xacro:gimbal_macro> -->
-	
+
+<!--Adding force/torque sensor to the base_link of a kopterworx-->
+
 </robot>
