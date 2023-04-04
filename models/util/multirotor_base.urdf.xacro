@@ -99,12 +99,12 @@
         <limit upper="100" lower="-100" effort="100" velocity="100" />
         <axis xyz="0 0 1" />
       </joint>
-
+    <!--
       <link name="sensor_link">
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <cylinder length="0.1" radius="0.02"/>
+          <cylinder length="0.1" radius="0.02"/> 
         </geometry>
         <material name="red">
           <color rgba="1 0 0 1"/>
@@ -121,38 +121,71 @@
         <mass value="0.1"/>
         <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
       </inertial>
+      </link>-->
+
+      <link name="sensor_link">
+        <visual>
+          <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+          <geometry>
+            <cylinder length="2" radius="0.02"/> 
+          </geometry>
+        </visual>
+        <collision>
+          <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+          <geometry>
+            <cylinder length="2" radius="0.02"/> 
+          </geometry>
+        </collision>
+        <inertial>
+          <origin xyz="0 0 0" rpy="0 0 0"/>
+          <mass value="1"/>
+          <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+        </inertial>
       </link>
 
       <gazebo reference="sensor_link">
+        <stopCfm>0.08</stopCfm>
+        <stopErp>0.2</stopErp>
+        <implicitSpringDamper>true</implicitSpringDamper>
         <provideFeedback>true</provideFeedback>
       </gazebo>
+      <!---
       <gazebo reference="sensor_joint">
         <provideFeedback>true</provideFeedback>
-      </gazebo>
+      </gazebo>-->
       <gazebo reference="${robot_namespace}/base_link">
         <provideFeedback>true</provideFeedback>
       </gazebo>
 
+      <gazebo reference="sensor_joint">
+        <stopCfm>0.08</stopCfm>
+        <stopErp>0.2</stopErp>
+        <implicitSpringDamper>true</implicitSpringDamper>
+        <provideFeedback>true</provideFeedback>
+      </gazebo>
+      <!--
       <gazebo>
         <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
-          <!--<updateRate>100.0</updateRate>-->
           <updateRate>100.0</updateRate>
           <topicName>/${robot_namespace}/ft_sensor</topicName>
           <jointName>sensor_joint</jointName>
         </plugin>
         <provideFeedback>true</provideFeedback>
-      </gazebo>
+      </gazebo>-->
 
-      
-
-      <!--
       <gazebo>
         <plugin name="ft_sensor" filename="libgazebo_ros_ft_sensor.so">
-          <updateRate>100.0</updateRate>
-          <topic>/${robot_namespace}/ft_sensor</topic>
-          <jointName>${robot_namespace}/sensor_joint</jointName>
+          <updateRate>1000.0</updateRate>
+          <robotNamespace>${robot_namespace}</robotNamespace>
+          <topicName>/${robot_namespace}/ft_sensor</topicName> 
+          <jointName>sensor_joint</jointName>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.0001</stddev> <!-- change this to simulate noise --> 
+          </noise>
         </plugin>
-      </gazebo>-->
+      </gazebo>
 
     
     <!-- attach multirotor_base_plugin to the base_link -->
